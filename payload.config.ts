@@ -1,7 +1,14 @@
-import { buildConfig } from "payload/config";
+import { buildConfig } from "payload";
+import { mongooseAdapter } from "@payloadcms/db-mongodb";
 
 export default buildConfig({
-  serverURL: "http://localhost:3000",
+  serverURL: process.env.SERVER_URL || "http://localhost:3000",
+  // Secret used to sign cookies/tokens — keep this safe in production
+  secret: process.env.PAYLOAD_SECRET || "change-me-to-a-secure-secret",
+  // Database configuration: prefer DATABASE_URL, fallback to a local MongoDB URL.
+  db: mongooseAdapter({
+    url: process.env.DATABASE_URI,
+  }),
   admin: {
     user: "users",
   },
