@@ -101,9 +101,7 @@ export default async function handler(
   const initializedFlag = Boolean(globalAny.__payloadInitialized);
 
   const initRequested =
-    typeof req.query.init === "string"
-      ? req.query.init === "true"
-      : req.query.init === true;
+    typeof req.query.init === "string" ? req.query.init === "true" : false;
 
   if (instancePresent || expressAppPresent || initializedFlag) {
     // Already initialized
