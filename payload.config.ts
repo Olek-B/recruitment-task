@@ -1,13 +1,21 @@
 import { buildConfig } from "payload";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 
+const dbUrl = process.env.DATABASE_URI || process.env.DATABASE_URL;
+
 export default buildConfig({
   serverURL: process.env.SERVER_URL,
   // Secret used to sign cookies/tokens — keep this safe in production
   secret: process.env.PAYLOAD_SECRET,
-  db: mongooseAdapter({
-    url: process.env.DATABASE_URI,
-  }),
+  // Create the DB adapter only when a DB URL is present. When no URL is
+  // available (for example during static builds or environments without a
+  // configured MongoDB), leave `db` undefined so Payload doesn't attempt to
+  // initialize a DB connection with a missing URL.
+  db: dbUrl
+    ? mongooseAdapter({
+        url: dbUrl,
+      })
+    : undefined,
   admin: {
     user: "users",
   },

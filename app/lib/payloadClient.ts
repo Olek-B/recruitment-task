@@ -38,10 +38,10 @@ export async function initPayload() {
   }
 
   const secret = process.env.PAYLOAD_SECRET;
-  const dbUrl = process.env.DATABASE_URL;
+  // Accept either DATABASE_URI or DATABASE_URL (prefer DATABASE_URI when both present)
+  const dbUrl = process.env.DATABASE_URI || process.env.DATABASE_URL;
 
-  // Temporary debug: log presence of the env vars (do NOT log their values).
-  // Deploy once to Vercel, check the build logs for these booleans, then remove these logs.
+  // Debug: log presence of the env vars and which one will be used (do NOT log actual connection strings)
   console.log(
     "[payload] DATABASE_URI present:",
     Boolean(process.env.DATABASE_URI),
@@ -50,10 +50,18 @@ export async function initPayload() {
     "[payload] DATABASE_URL present:",
     Boolean(process.env.DATABASE_URL),
   );
+  console.log(
+    "[payload] DB env chosen:",
+    process.env.DATABASE_URI
+      ? "DATABASE_URI"
+      : process.env.DATABASE_URL
+        ? "DATABASE_URL"
+        : "none",
+  );
 
   if (!dbUrl) {
     throw new Error(
-      "DATABASE_URI (or DATABASE_URL) is not set. Set it to your MongoDB connection string (Atlas).",
+      "DATABASE_URI or DATABASE_URL is not set. Set one of these to your MongoDB connection string (e.g. MongoDB Atlas).",
     );
   }
 
