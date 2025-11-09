@@ -73,11 +73,16 @@ export default async function handler(
   if (!expectedToken) {
     return res
       .status(500)
-      .json({ ok: false, error: "ADMIN_SETUP_TOKEN is not configured on the server." });
+      .json({
+        ok: false,
+        error: "ADMIN_SETUP_TOKEN is not configured on the server.",
+      });
   }
 
   if (!providedToken || providedToken !== expectedToken) {
-    return res.status(401).json({ ok: false, error: "Unauthorized (invalid token)." });
+    return res
+      .status(401)
+      .json({ ok: false, error: "Unauthorized (invalid token)." });
   }
 
   const { email, password, name } = req.body ?? {};
@@ -111,15 +116,22 @@ export default async function handler(
 
     return res.status(201).json({
       ok: true,
-      id: id ? String(id) : String((created as any).id ?? (created as any)._id ?? ""),
+      id: id
+        ? String(id)
+        : String((created as any).id ?? (created as any)._id ?? ""),
       message: "Admin user created. Remove or disable this endpoint after use.",
     });
   } catch (err: any) {
     // Handle common cases
     const message = err?.message ?? String(err);
 
-    if (message.toLowerCase().includes("email") && message.toLowerCase().includes("already")) {
-      return res.status(409).json({ ok: false, error: "A user with that email already exists." });
+    if (
+      message.toLowerCase().includes("email") &&
+      message.toLowerCase().includes("already")
+    ) {
+      return res
+        .status(409)
+        .json({ ok: false, error: "A user with that email already exists." });
     }
 
     console.error("create-admin error:", err);

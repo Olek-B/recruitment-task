@@ -32,7 +32,9 @@ async function ensurePayloadInitialized() {
 
   const dbUrl = process.env.DATABASE_URI || process.env.DATABASE_URL;
   if (!dbUrl) {
-    throw new Error("DATABASE_URI or DATABASE_URL is not set in the environment.");
+    throw new Error(
+      "DATABASE_URI or DATABASE_URL is not set in the environment.",
+    );
   }
 
   const db = mongooseAdapter({ url: dbUrl });
@@ -65,7 +67,7 @@ export default async function handler(
       name: "Admin",
     };
 
-    const body = req.method === "POST" ? req.body ?? {} : {};
+    const body = req.method === "POST" ? (req.body ?? {}) : {};
     const email = (body.email as string) || defaults.email;
     const password = (body.password as string) || defaults.password;
     const name = (body.name as string) || defaults.name;
@@ -76,7 +78,7 @@ export default async function handler(
     // Check for existing user with the same email to avoid duplicates
     const existing = await payload.find({
       collection: "users",
-      where: { email },
+      where: { email } as any,
       limit: 1,
     });
 
