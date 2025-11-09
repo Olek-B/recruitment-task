@@ -8,7 +8,9 @@ const MONGO_URI = process.env.DATABASE_URI || process.env.DATABASE_URL;
  */
 async function connect() {
   if (mongoose.connection.readyState >= 1) return;
-  await mongoose.connect(MONGO_URI);
+  if (!MONGO_URI) {
+    await mongoose.connect(MONGO_URI);
+  }
 }
 
 /**
