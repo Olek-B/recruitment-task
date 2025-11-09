@@ -1,14 +1,19 @@
-@import "tailwindcss/preflight";
-@tailwind utilities;
+/* globals.css
+   Replaced direct `@import "tailwindcss"` with Tailwind layer directives.
+   Keep your custom CSS variables and base styles below.
+*/
+
+/* Tailwind layers */
+@import "tailwindcss/prefligh";
 @tailwind utilities;
 
-/* your custom CSS follows */
-
+/* Custom design tokens */
 :root {
   --background: #ffffff;
   --foreground: #171717;
 }
 
+/* Keep existing theme block (if used by your tooling) */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -23,8 +28,19 @@
   }
 }
 
+/* Base styles */
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optional: small helpers preserved from previous file */
+code {
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, "Roboto Mono", "Courier New",
+    monospace;
 }
