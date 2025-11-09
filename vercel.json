@@ -1,5 +1,15 @@
 {
   "github": {
     "silent": true
-  }
+  },
+  "rewrites": [
+    {
+      "source": "/admin",
+      "destination": "/api/payload/admin"
+    },
+    {
+      "source": "/admin/:path*",
+      "destination": "/api/payload/admin/:path*"
+    }
+  ]
 }

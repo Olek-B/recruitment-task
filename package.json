@@ -13,7 +13,8 @@
     "payload": "^3.63.0",
     "react": "latest",
     "react-dom": "latest",
-    "semantic-release-github-actions-tags": "^2.0.2"
+    "semantic-release-github-actions-tags": "^2.0.2",
+    "express": "^4.18.2"
   },
   "devDependencies": {
     "@semantic-release/changelog": "^6.0.3",
