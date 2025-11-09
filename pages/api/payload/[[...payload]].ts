@@ -66,7 +66,10 @@ async function initPayloadExpressApp() {
   return app;
 }
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   try {
     const app = await initPayloadExpressApp();
 

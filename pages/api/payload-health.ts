@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import payload from "payload";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
-import payloadConfig from "../../../payload.config";
+import payloadConfig from "../../payload.config";
 
 /**
  * Health-check route for Payload initialization.
@@ -53,7 +53,9 @@ async function ensurePayloadInitialized(): Promise<{ initializedBy: string }> {
   // Attempt to initialize Payload programmatically
   const dbUrl = process.env.DATABASE_URI || process.env.DATABASE_URL;
   if (!dbUrl) {
-    throw new Error("DATABASE_URI or DATABASE_URL is not set in the environment.");
+    throw new Error(
+      "DATABASE_URI or DATABASE_URL is not set in the environment.",
+    );
   }
 
   const db = mongooseAdapter({ url: dbUrl });
@@ -73,7 +75,7 @@ async function ensurePayloadInitialized(): Promise<{ initializedBy: string }> {
 
 export default async function handler(
   req: NextApiRequest,
-  res: NextApiResponse<HealthResponse>
+  res: NextApiResponse<HealthResponse>,
 ) {
   if (req.method !== "GET") {
     res.setHeader("Allow", "GET");
@@ -86,8 +88,8 @@ export default async function handler(
   const chosenDbEnv = process.env.DATABASE_URI
     ? "DATABASE_URI"
     : process.env.DATABASE_URL
-    ? "DATABASE_URL"
-    : null;
+      ? "DATABASE_URL"
+      : null;
 
   const hasPayloadSecret = Boolean(process.env.PAYLOAD_SECRET);
 
