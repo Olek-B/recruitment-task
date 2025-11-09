@@ -2,11 +2,9 @@ import { buildConfig } from "payload";
 import { mongooseAdapter } from "@payloadcms/db-mongodb";
 
 export default buildConfig({
-  serverURL:
-    process.env.SERVER_URL ||
-    "mongodb+srv://preview:ibyh89gY4BPcRwgt@preview.lsyvtno.mongodb.net/?appName=preview",
+  serverURL: process.env.SERVER_URL,
   // Secret used to sign cookies/tokens — keep this safe in production
-  secret: process.env.PAYLOAD_SECRET || "ibyh89gY4BPcRwgt",
+  secret: process.env.PAYLOAD_SECRET,
   db: mongooseAdapter({
     url: process.env.DATABASE_URI,
   }),
