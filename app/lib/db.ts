@@ -1,7 +1,6 @@
 import mongoose, { Schema, models, model, Document } from "mongoose";
 
-const MONGO_URI =
-  process.env.DATABASE_URI || process.env.DATABASE_URL || "mongodb://localhost:27017/payload";
+const MONGO_URI = process.env.DATABASE_URI || process.env.DATABASE_URL;
 
 /**
  * Connect to MongoDB if not already connected.
@@ -34,7 +33,7 @@ const UserSchema = new Schema(
     name: { type: String },
     email: { type: String },
   },
-  { collection: "users", timestamps: false }
+  { collection: "users", timestamps: false },
 );
 
 const PostSchema = new Schema(
@@ -43,14 +42,16 @@ const PostSchema = new Schema(
     content: { type: String, required: true },
     author: { type: Schema.Types.ObjectId, ref: "users", required: false },
   },
-  { collection: "posts", timestamps: false }
+  { collection: "posts", timestamps: false },
 );
 
 /**
  * Create or reuse models (avoids OverwriteModelError in hot reload / serverless environments)
  */
-const User = (models.User as mongoose.Model<IUser>) || model<IUser>("User", UserSchema);
-const Post = (models.Post as mongoose.Model<IPost>) || model<IPost>("Post", PostSchema);
+const User =
+  (models.User as mongoose.Model<IUser>) || model<IUser>("User", UserSchema);
+const Post =
+  (models.Post as mongoose.Model<IPost>) || model<IPost>("Post", PostSchema);
 
 /**
  * Fetch posts from the database, populating the `author` relationship when possible.
@@ -72,5 +73,8 @@ export async function getPosts(limit = 10): Promise<Array<any>> {
  */
 export async function getPostById(id: string): Promise<any | null> {
   await connect();
-  return Post.findById(id).populate({ path: "author", model: User }).lean().exec();
+  return Post.findById(id)
+    .populate({ path: "author", model: User })
+    .lean()
+    .exec();
 }

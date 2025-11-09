@@ -37,8 +37,8 @@ export async function initPayload() {
     return globalThis.__payloadInstance;
   }
 
-  const secret = process.env.PAYLOAD_SECRET || "change-me-to-a-secure-secret";
-  const dbUrl = process.env.DATABASE_URI || process.env.DATABASE_URL;
+  const secret = process.env.PAYLOAD_SECRET;
+  const dbUrl = process.env.DATABASE_URL;
 
   // Temporary debug: log presence of the env vars (do NOT log their values).
   // Deploy once to Vercel, check the build logs for these booleans, then remove these logs.
