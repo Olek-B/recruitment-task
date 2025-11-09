@@ -8,6 +8,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@payloadcms/db-mongodb": "^3.63.0",
     "next": "latest",
     "payload": "^3.63.0",
     "react": "latest",
